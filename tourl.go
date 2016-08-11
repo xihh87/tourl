@@ -20,10 +20,14 @@ func main() {
 		if !utf8.ValidRune(c) {
 			continue
 		}
-		if c < utf8.RuneSelf {
-			wt.Write(buf[:s])
+		if c == ' ' {
+			wt.Write([]byte("%20"))
 		} else {
-			wt.Write([]byte(template.URLQueryEscaper(string(buf[:s]))))
+			if c < utf8.RuneSelf {
+				wt.Write(buf[:s])
+			} else {
+				wt.Write([]byte(template.URLQueryEscaper(string(buf[:s]))))
+			}
 		}
 	}
 }
